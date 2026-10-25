@@ -1,0 +1,332 @@
+@import "tailwindcss";
+
+/* ---------------------------------------------------------------------------
+   GATE CAT design tokens.
+   Midnight (default): deep navy, ivory ink, lavender secondary, violet accent,
+   cyan for focus/info, amber for milestones.
+   --------------------------------------------------------------------------- */
+
+@theme {
+  --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Fraunces Variable", ui-serif, Georgia, serif;
+  --font-mono: var(--font-geist-mono), ui-monospace, SFMono-Regular, Menlo, monospace;
+
+  --color-bg: var(--bg);
+  --color-bg-2: var(--bg-2);
+  --color-surface: var(--surface);
+  --color-surface-2: var(--surface-2);
+  --color-surface-3: var(--surface-3);
+  --color-line: var(--line);
+  --color-line-strong: var(--line-strong);
+  --color-ink: var(--ink);
+  --color-ink-2: var(--ink-2);
+  --color-ink-3: var(--ink-3);
+  --color-violet: var(--violet);
+  --color-violet-2: var(--violet-2);
+  --color-violet-soft: var(--violet-soft);
+  --color-cyan: var(--cyan);
+  --color-cyan-soft: var(--cyan-soft);
+  --color-amber: var(--amber);
+  --color-amber-soft: var(--amber-soft);
+  --color-rose: var(--rose);
+  --color-rose-soft: var(--rose-soft);
+  --color-mint: var(--mint);
+  --color-mint-soft: var(--mint-soft);
+
+  --radius-sm: 6px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+}
+
+:root {
+  --bg: #0a0f24;
+  --bg-2: #0c1229;
+  --surface: #11183a;
+  --surface-2: #172048;
+  --surface-3: #1f2a5a;
+  --line: rgba(169, 163, 207, 0.14);
+  --line-strong: rgba(169, 163, 207, 0.28);
+  --ink: #f3eedf;
+  --ink-2: #b4aed6;
+  --ink-3: #8781b0;
+  --violet: #7c6cff;
+  --violet-2: #a397ff;
+  --violet-soft: rgba(124, 108, 255, 0.16);
+  --cyan: #5fd4e6;
+  --cyan-soft: rgba(95, 212, 230, 0.14);
+  --amber: #f2b45a;
+  --amber-soft: rgba(242, 180, 90, 0.15);
+  --rose: #f0727a;
+  --rose-soft: rgba(240, 114, 122, 0.14);
+  --mint: #6edca6;
+  --mint-soft: rgba(110, 220, 166, 0.14);
+  --chart-grid: rgba(169, 163, 207, 0.12);
+  --glow: radial-gradient(60% 60% at 50% 40%, rgba(124, 108, 255, 0.22), transparent 70%);
+  color-scheme: dark;
+}
+
+:root[data-theme="ivory"] {
+  --bg: #f6f2e7;
+  --bg-2: #efe9da;
+  --surface: #fffcf4;
+  --surface-2: #f1ecdf;
+  --surface-3: #e6dfcd;
+  --line: rgba(40, 36, 80, 0.12);
+  --line-strong: rgba(40, 36, 80, 0.24);
+  --ink: #1b1840;
+  --ink-2: #514c7a;
+  --ink-3: #77729c;
+  --violet: #5b4ae6;
+  --violet-2: #4a39d4;
+  --violet-soft: rgba(91, 74, 230, 0.1);
+  --cyan: #0f8fa3;
+  --cyan-soft: rgba(15, 143, 163, 0.1);
+  --amber: #b9770f;
+  --amber-soft: rgba(185, 119, 15, 0.12);
+  --rose: #c8404b;
+  --rose-soft: rgba(200, 64, 75, 0.1);
+  --mint: #19865a;
+  --mint-soft: rgba(25, 134, 90, 0.1);
+  --chart-grid: rgba(40, 36, 80, 0.1);
+  --glow: radial-gradient(60% 60% at 50% 40%, rgba(91, 74, 230, 0.12), transparent 70%);
+  color-scheme: light;
+}
+
+html,
+body {
+  background: var(--bg);
+  color: var(--ink);
+}
+
+body {
+  font-feature-settings: "ss01", "cv11";
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+/* Ambient light: one soft source, top-left. Not repeated on components. */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  background:
+    radial-gradient(900px 500px at 12% -8%, rgba(124, 108, 255, 0.1), transparent 60%),
+    radial-gradient(700px 400px at 100% 0%, rgba(95, 212, 230, 0.05), transparent 60%);
+}
+:root[data-theme="ivory"] body::before {
+  background: radial-gradient(900px 500px at 12% -8%, rgba(91, 74, 230, 0.06), transparent 60%);
+}
+
+::selection {
+  background: var(--violet-soft);
+  color: var(--ink);
+}
+
+:focus-visible {
+  outline: 2px solid var(--cyan);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+.num {
+  font-variant-numeric: tabular-nums;
+}
+
+.display {
+  font-family: var(--font-display);
+  font-optical-sizing: auto;
+  letter-spacing: -0.01em;
+}
+
+/* Scrollbars */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--line-strong) transparent;
+}
+
+input[type="range"] {
+  accent-color: var(--violet);
+}
+
+input[type="checkbox"] {
+  accent-color: var(--violet);
+}
+
+/* Native dialog */
+dialog::backdrop {
+  background: rgba(5, 8, 20, 0.62);
+  backdrop-filter: blur(3px);
+}
+:root[data-theme="ivory"] dialog::backdrop {
+  background: rgba(27, 24, 64, 0.28);
+}
+
+/* Markdown (AI tutor) */
+.prose-cat {
+  line-height: 1.65;
+  font-size: 0.9375rem;
+  color: var(--ink);
+}
+.prose-cat > * + * {
+  margin-top: 0.75em;
+}
+.prose-cat h1,
+.prose-cat h2,
+.prose-cat h3 {
+  font-weight: 600;
+  line-height: 1.3;
+  margin-top: 1.25em;
+}
+.prose-cat h1 {
+  font-size: 1.2rem;
+}
+.prose-cat h2 {
+  font-size: 1.08rem;
+}
+.prose-cat h3 {
+  font-size: 1rem;
+}
+.prose-cat ul {
+  list-style: disc;
+  padding-left: 1.25rem;
+}
+.prose-cat ol {
+  list-style: decimal;
+  padding-left: 1.25rem;
+}
+.prose-cat li + li {
+  margin-top: 0.25em;
+}
+.prose-cat a {
+  color: var(--cyan);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+.prose-cat strong {
+  font-weight: 600;
+}
+.prose-cat code:not(pre code) {
+  font-family: var(--font-mono);
+  font-size: 0.85em;
+  background: var(--surface-3);
+  padding: 0.1em 0.35em;
+  border-radius: 4px;
+}
+.prose-cat pre {
+  background: var(--bg-2);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 0.85rem 1rem;
+  overflow-x: auto;
+  font-size: 0.8125rem;
+  line-height: 1.55;
+}
+.prose-cat pre code {
+  font-family: var(--font-mono);
+}
+.prose-cat table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.875rem;
+  display: block;
+  overflow-x: auto;
+}
+.prose-cat th,
+.prose-cat td {
+  border: 1px solid var(--line);
+  padding: 0.35rem 0.6rem;
+  text-align: left;
+}
+.prose-cat blockquote {
+  border-left: 2px solid var(--violet);
+  padding-left: 0.85rem;
+  color: var(--ink-2);
+}
+.prose-cat .katex-display {
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding: 0.25rem 0;
+}
+
+/* highlight.js tokens tuned to the palette */
+.hljs-keyword,
+.hljs-selector-tag,
+.hljs-built_in {
+  color: var(--violet-2);
+}
+.hljs-string,
+.hljs-attr {
+  color: var(--mint);
+}
+.hljs-number,
+.hljs-literal {
+  color: var(--amber);
+}
+.hljs-comment {
+  color: var(--ink-3);
+  font-style: italic;
+}
+.hljs-title,
+.hljs-function {
+  color: var(--cyan);
+}
+.hljs-type,
+.hljs-meta {
+  color: var(--rose);
+}
+
+@keyframes float-z {
+  0% {
+    transform: translate(0, 0);
+    opacity: 0;
+  }
+  30% {
+    opacity: 1;
+  }
+  100% {
+    transform: translate(6px, -14px);
+    opacity: 0;
+  }
+}
+.z-float {
+  animation: float-z 3.2s ease-in-out infinite;
+}
+.z-float-2 {
+  animation: float-z 3.2s ease-in-out 1.4s infinite;
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -200px 0;
+  }
+  100% {
+    background-position: 200px 0;
+  }
+}
+.skeleton {
+  background: linear-gradient(90deg, var(--surface-2) 0, var(--surface-3) 50%, var(--surface-2) 100%);
+  background-size: 400px 100%;
+  animation: shimmer 1.4s linear infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .z-float,
+  .z-float-2,
+  .skeleton {
+    animation: none;
+  }
+  * {
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+:root[data-motion="reduced"] .z-float,
+:root[data-motion="reduced"] .z-float-2,
+:root[data-motion="reduced"] .skeleton {
+  animation: none;
+}
+:root[data-motion="reduced"] * {
+  transition-duration: 0.01ms !important;
+}
